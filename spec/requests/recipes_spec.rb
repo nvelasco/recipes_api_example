@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Recipes', type: :request do
-  describe 'GET /' do
+  describe 'GET /index' do
     before do
       FactoryBot.create_list(:recipe, 5)
       get '/recipes'
@@ -13,6 +13,30 @@ RSpec.describe 'Recipes', type: :request do
 
     it 'returns status code 200' do
       expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'GET /show' do 
+    context 'recipe found' do 
+      let!(:my_recipe) { FactoryBot.create(:recipe) }
+
+      before do
+        get "/recipes/#{my_recipe.id}"
+      end
+
+      it 'returns the recipe' do 
+        expect(json['id']).to eq(my_recipe.id)
+      end
+
+      it 'returns an ok status' do 
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'recipe not found' do 
+      it 'returns an error' do
+        expect { get "/recipes/99" }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 

@@ -6,7 +6,7 @@ This project is created for refreshing and learning skills related to Ruby On Ra
 
 ## Objectives
 
-- [ ] CRUD for recipes
+- [x] CRUD for recipes
 - [ ] Add some tests with RSpec
 
 ## Sources
